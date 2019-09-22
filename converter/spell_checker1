@@ -1,6 +1,0 @@
-fstarcsort w.fst w.fst
-fstarcsort S1R.fst S1Rs.fst
-fstcompose w.fst S1Rs.fst w.fst
-fstcompose w.fst A12_min.fst w.fst
-fstshortestpath w.fst w.fst
-fstprint --isymbols=io2.syms --osymbols=io2.syms w.fst > text.txt
