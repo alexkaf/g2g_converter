@@ -1,0 +1,7 @@
+fstcompile --isymbols=io2.syms --osymbols=io2.syms sample.txt w.fst
+
+fstcompose w.fst Ts.fst w.fst
+fstshortestpath w.fst w.fst
+fstprint --isymbols=io2.syms --osymbols=io2.syms w.fst > text.txt
+
+rm w.fst 

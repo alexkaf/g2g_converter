@@ -1,0 +1,5 @@
+fstcompile --isymbols=io2.syms --osymbols=io2.syms sample.txt w.fst
+
+fstarcsort w.fst w.fst
+fstarcsort GI.fst GIs.fst
+fstcompose w.fst GIs.fst w.fst
