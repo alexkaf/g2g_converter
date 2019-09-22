@@ -1,0 +1,6 @@
+fstarcsort w.fst w.fst
+fstarcsort S2R.fst S2Rs.fst
+fstcompose w.fst S2Rs.fst w.fst
+fstcompose w.fst A12_min.fst w.fst
+fstshortestpath w.fst w.fst
+fstprint --isymbols=io2.syms --osymbols=io2.syms w.fst > text.txt

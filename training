@@ -1,0 +1,52 @@
+python nlp_matches.py
+rm rules_partial_poss.txt rules_counts.txt rules_poss.txt
+
+python3 create_G.py
+rm rules_costs.txt
+python createI.py
+
+python3 lex_rules_gr.py
+python lex_rules_en.py
+
+fstcompile --isymbols=io2.syms --osymbols=io2.syms A1.txt A1.fst
+fstdeterminize A1.fst A1_det.fst
+fstminimize A1_det.fst A1_min.fst
+rm A1.fst A1_det.fst 
+
+fstcompile --isymbols=io2.syms --osymbols=io2.syms A2.txt A2.fst
+fstdeterminize A2.fst A2_det.fst
+fstminimize A2_det.fst A2_min.fst
+rm A2.fst A2_det.fst 
+
+fstunion A1_min.fst A2_min.fst A12.fst
+fstdeterminize A12.fst A12_det.fst
+fstminimize A12_det.fst A12_min.fst
+rm A12.fst A12_det.fst A1_min.fst A2_min.fst
+
+fstcompile --isymbols=io2.syms --osymbols=io2.syms G.txt G.fst
+fstcompile --isymbols=io2.syms --osymbols=io2.syms I.txt I.fst
+
+fstclosure G.fst G_closure.fst
+fstclosure I.fst I_closure.fst
+fstunion G_closure.fst I_closure.fst GI.fst
+rm G.fst G_closure.fst I.fst I_closure.fst
+
+fstcompose GI.fst A12_min.fst T.fst
+
+python3 make_orthograph.py
+
+fstcompile --isymbols=io2.syms --osymbols=io2.syms make_of_Efirst.txt E1.fst
+fstcompile --isymbols=io2.syms --osymbols=io2.syms make_of_Epsilon.txt E2.fst
+fstcompile --isymbols=io2.syms --osymbols=io2.syms self_to_self.txt Io.fst
+
+fstclosure Io.fst Ioc.fst
+fstconcat Ioc.fst E1.fst IE1.fst
+fstconcat Ioc.fst E2.fst IE2.fst
+fstconcat IE1.fst Ioc.fst S1P.fst
+fstconcat IE2.fst Ioc.fst S1R.fst
+fstconcat S1P.fst S1P.fst S2P.fst
+fstconcat S1R.fst S1R.fst S2R.fst
+rm Ioc.fst E1.fst IE1.fst E2.fst IE2.fst 
+
+echo $'cd ./Install  \n python3 dictator.py' > ../convert
+chmod 755 ../convert
