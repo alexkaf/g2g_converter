@@ -24,3 +24,7 @@ Implementation:<br>
   
 Further improvements:<br>
 The model may be improved if <b>N-grams</b> are used so each letter translation is done taking into account the translation of the N previous letters. Those <b>N-grams</b> could also be applied between words, so the translation would be sensitive to context. Other machine learning techniques worth of examination is the use of Markov Models, LSTMs and BoG techniques.
+
+Contributors:
+* alexkaf
+* manzar96
